@@ -5,19 +5,26 @@ app = Flask(__name__)
 
 @app.route('/analyze_sentiment', methods=['POST'])
 def analyze_sentiment():
-    data = request.get_json()
-    comment_text = data.get('comment')
+    data = request.json
+    comments = data.get('comments', [])
 
-    analysis = TextBlob(comment_text)
-    polarity = analysis.sentiment.polarity
+    # Perform sentiment analysis
+    analysis_results = []
+    for comment in comments:
+        analysis = TextBlob(comment)
+        polarity = analysis.sentiment.polarity
+        is_negative = polarity < 0
+        analysis_results.append({'comment': comment, 'is_negative': is_negative})
 
-    is_negative = polarity < 0
+    return jsonify({'sentiment_analysis': analysis_results})
 
-    return jsonify({'is_negative': is_negative})
+if __name__ == '__main__':
+    app.run(debug=True)
 
+# TESTING FOR INITIAL FLASK SERVER AND SENTIMENT ANALYSIS
 # @app.route('/test', methods=['GET'])
 # def test():
-#     comment_text = "I feel very neutral about this video"
+#     comment_text = "I love this video. It's amazing!"
 
 #     payload = {'comment': comment_text}
 #     response = app.test_client().post('/analyze_sentiment', json=payload, content_type = 'application/json')
