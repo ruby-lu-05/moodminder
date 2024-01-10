@@ -2,20 +2,20 @@
     "manifest_version": 3,
     "name": "MoodMinder",
     "version": "1.0",
-    "description": "Filter out negative Youtube comments for a more mindful and pleasant viewing experience.",
+    "description": "Filter out negative Reddit comments for a more mindful and pleasant viewing experience.",
     "permissions": [
       "activeTab",
       "storage"
     ],
     "host_permissions": [
-      "https://www.youtube.com/*"
+      "https://www.reddit.com/*"
     ],
     "background": {
       "service_worker": "background.js"
     },
     "content_scripts": [
       {
-        "matches": ["https://www.youtube.com/*"],
+        "matches": ["https://www.reddit.com/*"],
         "js": ["content.js"]
       }
     ],
