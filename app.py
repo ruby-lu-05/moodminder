@@ -8,7 +8,7 @@ def analyze_sentiment():
     data = request.json
     comments = data.get('comments', [])
 
-    # Perform sentiment analysis
+    # perform sentiment analysis
     analysis_results = []
     for comment in comments:
         analysis = TextBlob(comment)

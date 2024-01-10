@@ -1,15 +1,17 @@
 {
-    "manifest_version": 2,
+    "manifest_version": 3,
     "name": "MoodMinder",
     "version": "1.0",
+    "description": "Filter out negative Youtube comments for a more mindful and pleasant viewing experience.",
     "permissions": [
       "activeTab",
-      "storage",
+      "storage"
+    ],
+    "host_permissions": [
       "https://www.youtube.com/*"
     ],
     "background": {
-      "scripts": ["background.js"],
-      "persistent": false
+      "service_worker": "background.js"
     },
     "content_scripts": [
       {
@@ -17,12 +19,12 @@
         "js": ["content.js"]
       }
     ],
-    "browser_action": {
-      "default_popup": "popup.html",
+    "action": {
       "default_icon": {
-        "16": "images/icon16.png",
-        "48": "images/icon48.png",
-        "128": "images/icon128.png"
+        "16": "mood.png",
+        "32": "mood.png",
+        "48": "mood.png",
+        "128": "mood.png"
       }
     }
   }
