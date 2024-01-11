@@ -1,3 +1,41 @@
+// mutationObserver to detect changes in the DOM
+const observer = new MutationObserver(() => {
+  // handle the changes (e.g., check for new comments)
+  handleButtonClick();
+});
+
+// configuration of the observer
+const observerConfig = {
+  childList: true,
+  subtree: true,
+  attributes: false,
+  characterData: false,
+};
+
+// start observing the target node for changes
+observer.observe(document.body, observerConfig);
+
+// handling button clicks
+function handleButtonClick() {
+  // extract comments again
+  const comments = extractComments();
+
+  // send the updated comments to the background script
+  console.log('handling button click');
+
+  // Send a message to the background script for a content script reload
+  chrome.runtime.sendMessage({ reloadContentScript: true });
+
+  // You can also send the updated comments directly
+  chrome.runtime.sendMessage({ comments: comments });
+}
+
+// event listener for the button click
+document.addEventListener('click', event => {
+  console.log('clicked')
+  handleButtonClick();
+});
+
 //extract comments with the <p> tag
 function extractComments() {
   const comments = [];

@@ -36,7 +36,6 @@ chrome.action.onClicked.addListener(async (tab) => {
 
 // listen for messages from content script
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-
   if (message.comments) {
     const url = 'http://127.0.0.1:5000/analyze_sentiment';
     // send comments to Flask server
