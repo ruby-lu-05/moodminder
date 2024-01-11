@@ -3,7 +3,7 @@ from flask_cors import CORS
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 app = Flask(__name__)
-CORS(app, origins="chrome-extension://lcanefhgknlhielheceelofgepahklcm")
+CORS(app, origins="chrome-extension://gdmccphimggpgjekfkhcbblgcanmckdh")
 
 @app.route('/analyze_sentiment', methods=['POST'])
 def analyze_sentiment():

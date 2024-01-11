@@ -1,11 +1,11 @@
 // mutationObserver to detect changes in the DOM
-const observer = new MutationObserver(() => {
+observer = new MutationObserver(() => {
   // handle the changes (e.g., check for new comments)
   handleButtonClick();
 });
 
 // configuration of the observer
-const observerConfig = {
+observerConfig = {
   childList: true,
   subtree: true,
   attributes: false,
@@ -17,22 +17,15 @@ observer.observe(document.body, observerConfig);
 
 // handling button clicks
 function handleButtonClick() {
-  // extract comments again
   const comments = extractComments();
 
   // send the updated comments to the background script
-  console.log('handling button click');
-
-  // Send a message to the background script for a content script reload
   chrome.runtime.sendMessage({ reloadContentScript: true });
-
-  // You can also send the updated comments directly
   chrome.runtime.sendMessage({ comments: comments });
 }
 
-// event listener for the button click
 document.addEventListener('click', event => {
-  console.log('clicked')
+  // console.log('clicked')
   handleButtonClick();
 });
 
@@ -42,7 +35,7 @@ function extractComments() {
   const commentElements = document.querySelectorAll('p');
 
   commentElements.forEach(commentElement => {
-    console.log(commentElement.textContent)
+    // console.log(commentElement.textContent)
     comments.push(commentElement.textContent);
   });
 
@@ -63,7 +56,13 @@ function handleSentimentAnalysisResults(results) {
   results.forEach(commentData => {
     const commentElement = findCommentElementByContent(commentData.comment);
     if (commentElement && commentData.is_negative) {
-      commentElement.style.filter = 'blur(6px)';
+      chrome.storage.local.get(["extensionState"]).then((is_on) => {
+        if (is_on.extensionState) {
+          commentElement.style.filter = 'blur(4px)';
+        } else {
+          commentElement.style.filter = 'blur(0px)';
+        }
+      });
       // option2 hide comments, add function for user to choose between the options later using the extension interface
       // commentElement.style.display = 'none';
     }
@@ -72,7 +71,7 @@ function handleSentimentAnalysisResults(results) {
 
 function findCommentElementByContent(commentContent) {
   const commentElements = document.querySelectorAll('p');
-  console.log('matched comment elements:', commentElements);
+  // console.log('matched comment elements:', commentElements);
   for (let i = 0; i < commentElements.length; i++) {
     const currentCommentText = commentElements[i].textContent;
     if (currentCommentText.includes(commentContent)) {
