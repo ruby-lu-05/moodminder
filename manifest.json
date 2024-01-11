@@ -1,25 +1,25 @@
 {
-    "manifest_version": 3,
-    "name": "MoodMinder",
-    "version": "1.0",
-    "description": "Filter out negative Reddit comments for a more mindful and pleasant viewing experience.",
-    "permissions": [
-      "activeTab",
-      "storage",
-      "scripting"
-    ],
-    "host_permissions": [
-      "https://www.reddit.com/*"
-    ],
-    "background": {
-      "service_worker": "background.js"
-    },
-    "action": {
-      "default_icon": {
-        "16": "mood.png",
-        "32": "mood.png",
-        "48": "mood.png",
-        "128": "mood.png"
-      }
+  "manifest_version": 3,
+  "name": "MoodMinder",
+  "version": "1.0",
+  "description": "Filter out negative Reddit comments for a more mindful and pleasant viewing experience.",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://www.reddit.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_icon": {
+      "16": "mood.png",
+      "32": "mood.png",
+      "48": "mood.png",
+      "128": "mood.png"
     }
   }
+}

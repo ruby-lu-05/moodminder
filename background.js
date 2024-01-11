@@ -1,5 +1,4 @@
-console.log('Background script loaded!');
-
+//ON OFF function
 chrome.runtime.onInstalled.addListener(() => {
   chrome.action.setBadgeText({
     text: "OFF",
@@ -20,16 +19,17 @@ chrome.action.onClicked.addListener(async (tab) => {
     });
     if (nextState === "ON") {
       console.log('extension on');
-      chrome.tabs.query({active: true, currentWindow: true}).then(([tab]) => {
-      chrome.scripting.executeScript(
-        {
-          target: {tabId: tab.id},
-          files: ['content.js'],
-        });
+      chrome.tabs.query({ active: true, currentWindow: true }).then(([tab]) => {
+        chrome.scripting.executeScript(
+          {
+            target: { tabId: tab.id },
+            files: ['content.js'],
+          });
       })
     } else if (nextState === "OFF") {
       console.log('extension not on')
-      //add turn off extension later
+      chrome.tabs.reload();
+      //consider altering this to remove the blur/hide instead
     }
   }
 });
@@ -38,7 +38,6 @@ chrome.action.onClicked.addListener(async (tab) => {
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
   if (message.comments) {
-    console.log('initial message received')
     const url = 'http://127.0.0.1:5000/analyze_sentiment';
     // send comments to Flask server
     fetch(url, {
@@ -55,10 +54,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         return response.json();
       })
       .then(data => {
-        console.log('Received sentiment analysis:', data);
         // send sentiment analysis results to content script
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-          chrome.tabs.sendMessage(tabs[0].id, { analysisResults: data });
+          chrome.tabs.sendMessage(tabs[0].id, { analysisResults: data.sentiment_analysis });
         });
       })
       .catch(error => console.error('Error:', error));

@@ -1,5 +1,3 @@
-console.log('content script loaded');
-
 //extract comments with the <p> tag
 function extractComments() {
   const comments = [];
@@ -18,34 +16,31 @@ chrome.runtime.sendMessage({ comments: extractComments() });
 
 // listen for messages from the background script
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    if (message.analysisResults) {
-      handleSentimentAnalysisResults(message.analysisResults);
+  if (message.analysisResults) {
+    handleSentimentAnalysisResults(message.analysisResults);
+  }
+});
+
+function handleSentimentAnalysisResults(results) {
+  results.forEach(commentData => {
+    const commentElement = findCommentElementByContent(commentData.comment);
+    if (commentElement && commentData.is_negative) {
+      commentElement.style.filter = 'blur(6px)';
+      // option2 hide comments, add function for user to choose between the options later using the extension interface
+      // commentElement.style.display = 'none';
     }
   });
-  
-  function handleSentimentAnalysisResults(results) {
-    results.forEach(commentData => {
-      const commentElement = findCommentElementByContent(commentData.comment);
-      if (message.comments){
-        console.log('Received comments:', message.comments);
-      }
-      if (commentElement && commentData.is_negative) {
-        commentElement.style.filter = 'blur(4px)';
-        // or option two hide comments, add function for user to choose between the two options later
-        // commentElement.style.display = 'none';
-      }
-    });
-  }
-  
-  function findCommentElementByContent(commentContent) {
-    const commentElements = document.querySelectorAll('p'); 
-    console.log('Matched comment elements:', commentElements);
-    for (let i = 0; i < commentElements.length; i++) {
-      const currentCommentText = commentElements[i].textContent;
-      if (currentCommentText.includes(commentContent)) {
-        return commentElements[i];
-      }
+}
+
+function findCommentElementByContent(commentContent) {
+  const commentElements = document.querySelectorAll('p');
+  console.log('matched comment elements:', commentElements);
+  for (let i = 0; i < commentElements.length; i++) {
+    const currentCommentText = commentElements[i].textContent;
+    if (currentCommentText.includes(commentContent)) {
+      return commentElements[i];
     }
-    return null;
   }
+  return null;
+}
 
