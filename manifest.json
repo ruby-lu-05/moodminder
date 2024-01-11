@@ -20,6 +20,7 @@
       "32": "mood.png",
       "48": "mood.png",
       "128": "mood.png"
-    }
+    },
+    "default_popup": "popup.html"
   }
 }

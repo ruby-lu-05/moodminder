@@ -1,44 +1,38 @@
-//ON OFF function
+console.log('background script loaded')
+
+let extensionState = false;
+
 chrome.runtime.onInstalled.addListener(() => {
-  chrome.action.setBadgeText({
-    text: "OFF",
-  });
+  chrome.storage.sync.set({ 'extensionState': extensionState });
 });
 
-link = "https://www.reddit.com"
-chrome.action.onClicked.addListener(async (tab) => {
-  if (tab.url.startsWith(link)) {
-    // retrieve the action badge to check if the extension is 'ON' or 'OFF'
-    const prevState = await chrome.action.getBadgeText({ tabId: tab.id });
-    // next state will always be the opposite
-    const nextState = prevState === 'ON' ? 'OFF' : 'ON'
-    // set the action badge to the next state
-    await chrome.action.setBadgeText({
-      tabId: tab.id,
-      text: nextState,
-    });
-    if (nextState === "ON") {
+// handle popup toggle
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.extensionState !== undefined) {
+    extensionState = message.extensionState;
+
+    // handle extension state change (ON/OFF)
+    if (extensionState) {
       console.log('extension on');
-      chrome.tabs.query({ active: true, currentWindow: true }).then(([tab]) => {
+      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
         chrome.scripting.executeScript(
           {
-            target: { tabId: tab.id },
+            target: { tabId: tabs[0].id },
             files: ['content.js'],
           });
-      })
-    } else if (nextState === "OFF") {
-      console.log('extension not on')
+      });
+    } else {
+      console.log('extension off');
       chrome.tabs.reload();
-      //consider altering this to remove the blur/hide instead
     }
   }
 });
 
-// listen for messages from content script
+// Listen for messages from content script
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.comments) {
     const url = 'http://127.0.0.1:5000/analyze_sentiment';
-    // send comments to Flask server
+    // Send comments to Flask server
     fetch(url, {
       method: 'POST',
       headers: {
@@ -53,7 +47,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         return response.json();
       })
       .then(data => {
-        // send sentiment analysis results to content script
+        // Send sentiment analysis results to content script
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
           chrome.tabs.sendMessage(tabs[0].id, { analysisResults: data.sentiment_analysis });
         });
