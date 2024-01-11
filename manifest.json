@@ -5,7 +5,8 @@
     "description": "Filter out negative Reddit comments for a more mindful and pleasant viewing experience.",
     "permissions": [
       "activeTab",
-      "storage"
+      "storage",
+      "scripting"
     ],
     "host_permissions": [
       "https://www.reddit.com/*"
@@ -13,12 +14,6 @@
     "background": {
       "service_worker": "background.js"
     },
-    "content_scripts": [
-      {
-        "matches": ["https://www.reddit.com/*"],
-        "js": ["content.js"]
-      }
-    ],
     "action": {
       "default_icon": {
         "16": "mood.png",

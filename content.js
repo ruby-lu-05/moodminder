@@ -1,3 +1,21 @@
+console.log('content script loaded');
+
+//extract comments with the <p> tag
+function extractComments() {
+  const comments = [];
+  const commentElements = document.querySelectorAll('p');
+
+  commentElements.forEach(commentElement => {
+    console.log(commentElement.textContent)
+    comments.push(commentElement.textContent);
+  });
+
+  return comments;
+}
+
+// send extracted comments to the background script
+chrome.runtime.sendMessage({ comments: extractComments() });
+
 // listen for messages from the background script
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.analysisResults) {
@@ -8,6 +26,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   function handleSentimentAnalysisResults(results) {
     results.forEach(commentData => {
       const commentElement = findCommentElementByContent(commentData.comment);
+      if (message.comments){
+        console.log('Received comments:', message.comments);
+      }
       if (commentElement && commentData.is_negative) {
         commentElement.style.filter = 'blur(4px)';
         // or option two hide comments, add function for user to choose between the two options later
@@ -17,7 +38,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
   
   function findCommentElementByContent(commentContent) {
-    const commentElements = document.querySelectorAll('.content-text'); 
+    const commentElements = document.querySelectorAll('p'); 
+    console.log('Matched comment elements:', commentElements);
     for (let i = 0; i < commentElements.length; i++) {
       const currentCommentText = commentElements[i].textContent;
       if (currentCommentText.includes(commentContent)) {
@@ -26,3 +48,4 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     }
     return null;
   }
+

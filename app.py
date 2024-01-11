@@ -1,7 +1,9 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 app = Flask(__name__)
+CORS(app, origins="chrome-extension://gdmccphimggpgjekfkhcbblgcanmckdh")
 
 @app.route('/analyze_sentiment', methods=['POST'])
 def analyze_sentiment():
@@ -21,6 +23,6 @@ def analyze_sentiment():
 
     return jsonify({'sentiment_analysis': analysis_results})
 
-if __name__ == '__main__':
+if __name__ == '__main__': 
     app.run(debug=True)
 
