@@ -58,13 +58,21 @@ function handleSentimentAnalysisResults(results) {
     if (commentElement && commentData.is_negative) {
       chrome.storage.local.get(["extensionState"]).then((is_on) => {
         if (is_on.extensionState) {
-          commentElement.style.filter = 'blur(4px)';
+          chrome.storage.local.get(["blur"]).then((is_blur) => {
+            if (is_blur.blur) {
+              commentElement.style.filter = 'blur(4px)';
+            } else {
+              commentElement.style.display = 'none';
+            }});
         } else {
-          commentElement.style.filter = 'blur(0px)';
+          chrome.storage.local.get(["blur"]).then((is_blur) => {
+            if (is_blur.blur) {
+              commentElement.style.filter = 'blur(0px)';
+            } else {
+              commentElement.style.display = 'inline';
+            }});
         }
       });
-      // option2 hide comments, add function for user to choose between the options later using the extension interface
-      // commentElement.style.display = 'none';
     }
   });
 }

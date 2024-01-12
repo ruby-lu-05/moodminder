@@ -3,11 +3,16 @@ document.addEventListener('DOMContentLoaded', function () {
   const blurButton = document.getElementById('blur-button');
   const hideButton = document.getElementById('hide-button');
   let extensionState = false;
+  let blur = true;
 
   // Retrieve extension state from Chrome storage
   chrome.storage.local.get('extensionState', function (data) {
     extensionState = data.extensionState || false;
     updateToggleButton(extensionState);
+  });
+
+  chrome.storage.local.get('blur', function (data) {
+    blur = data.blur !== undefined ? data.blur : true;
   });
 
   toggleButton.addEventListener('change', function () {
@@ -22,13 +27,23 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   blurButton.addEventListener('click', function () {
-    blurButton.classList.add('active');
-    hideButton.classList.remove('active');
+    if (!blurButton.classList.contains('active')) {
+      blurButton.classList.add('active');
+      hideButton.classList.remove('active');
+      blur = true;
+      chrome.storage.local.set({ 'blur': blur });
+      chrome.runtime.sendMessage({ blur: blur });
+    }
   });
 
   hideButton.addEventListener('click', function () {
-    hideButton.classList.add('active');
-    blurButton.classList.remove('active');
+    if (!hideButton.classList.contains('active')) {
+      hideButton.classList.add('active');
+      blurButton.classList.remove('active');
+      blur = false;
+      chrome.storage.local.set({ 'blur': blur });
+      chrome.runtime.sendMessage({ blur: blur });
+    }
   });
 
   function updateToggleButton(state) {
