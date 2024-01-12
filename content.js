@@ -1,3 +1,21 @@
+var isMousePressed = false;
+
+document.addEventListener('mousedown', handleMouseDown);
+document.addEventListener('mouseup', handleMouseUp);
+
+function handleMouseDown(event) {
+  const clickedComment = event.target;
+
+  if (clickedComment.tagName.toLowerCase() === 'p') {
+    isMousePressed = true;
+    toggleUnblurOnComment(clickedComment);
+  }
+}
+
+function handleMouseUp() {
+  isMousePressed = false;
+}
+
 // mutationObserver to detect changes in the DOM
 observer = new MutationObserver(() => {
   // handle the changes (e.g., check for new comments)
@@ -91,4 +109,16 @@ function findCommentElementByContent(commentContent) {
     }
   }
   return null;
+}
+
+function toggleUnblurOnComment(commentElement) {
+  chrome.storage.local.get(["extensionState"], (is_on) => {
+    if (is_on.extensionState) {
+      if (isMousePressed) {
+        commentElement.style.filter = 'blur(0px)';
+      } else {
+        commentElement.style.filter = 'blur(4px)';
+      }
+    }
+  });
 }
