@@ -1,21 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <style>
-    body {
-      width: 200px;
-      height: 100px;
-      padding: 10px;
-    }
-
-    button {
-      margin-top: 10px;
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MOODMINDER for Reddit</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,800;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="popup.css">
 </head>
 <body>
-  <h3>MoodMinder</h3>
-  <button id="toggleButton">OFF</button>
+  <h1>MOODMINDER</h1>
+  <h2>for Reddit</h2>
+  <div class="buttons-container">
+    <button id="blur-button" class="active">BLUR</button>
+    <button id="hide-button">HIDE</button>
+  </div>
+  <div class="on-off">
+    <h3>OFF</h3>
+    <label class="switch">
+      <input type="checkbox" id="switch">
+      <span class="slider round"></span>
+    </label>
+    <h3>ON</h3>
+  </div>
   <script src="popup.js"></script>
 </body>
 </html>

@@ -1,0 +1,142 @@
+:root {
+    --green3: #466672;
+    --green2: #95B198;
+    --green1: #EFF6E0;
+}
+
+html {
+    width: 300px;
+    height: 400px;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    background: radial-gradient(circle at top left, var(--green3), var(--green2)),
+        radial-gradient(circle at top right, var(--green2), var(--green1)),
+        radial-gradient(circle at bottom left, var(--green1), var(--green3)),
+        radial-gradient(circle at bottom right, var(--green3), var(--green1));
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+}
+
+h1 {
+    font-size: 30px;
+    margin-top: 30px;
+    margin-bottom: 0px;
+}
+
+h2 {
+    margin-top: 0px;
+    font-size: 25px;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--green2);
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 80px;
+    height: 40px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    background-color: var(--green3);
+    -webkit-transition: .4s;
+    transition: .4s;
+    border: 2px solid var(--green2);
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 30px;
+    width: 30px;
+    left: 5px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked+.slider {
+    background-color: var(--green2);
+}
+
+input:checked+.slider:before {
+    -webkit-transform: translateX(40px);
+    -ms-transform: translateX(40px);
+    transform: translateX(40px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+h3 {
+    margin: 10px 10px;
+    color: white;
+}
+
+.on-off {
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.buttons-container {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+button {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    line-height: 0px;
+    color: white;
+    padding: 10px;
+    width: 110px;
+    height: 40px;
+    border: 2px solid var(--green2);
+    background-color: transparent;
+    transition: background-color 0.8s, color 0.8s;
+    cursor: pointer;
+}
+
+#blur-button {
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+}
+
+#hide-button {
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
+
+.active {
+    background-color: var(--green3);
+    color: white;
+}
