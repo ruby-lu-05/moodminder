@@ -4,8 +4,8 @@ let extensionState = false;
 let blurred = true;
 
 chrome.storage.local.get(['extensionState', 'blurred'], function (data) {
-  extensionState = data.extensionState || false;
-  blurred = data.blurred || true;
+    extensionState = data.extensionState || false;
+    blurred = data.blurred || true;
 });
 
 chrome.runtime.onInstalled.addListener(() => {
@@ -26,14 +26,13 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     }
 
     if (message.blurred !== undefined) {
-      // update the extension state and save it to Chrome storage
-      blurred = message.blurred;
-      chrome.storage.local.set({ 'blurred': blurred });
+        // update the extension state and save it to Chrome storage
+        blurred = message.blurred;
+        chrome.storage.local.set({ 'blurred': blurred });
 
-      // execute content script in the active tab
-      executeContentScript();
-  }
-  })
+        // execute content script in the active tab
+        executeContentScript();
+    }
 
     if (message.comments) {
         const url = 'http://127.0.0.1:5000/analyze_sentiment';
@@ -59,14 +58,15 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             })
             .catch(error => console.error('Error:', error));
     }
+})
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-  // check if the tab is fully loaded and the extension is enabled
-  if (changeInfo.status === 'complete' && tab.active) {
-      // Execute content script when the tab is updated and the extension is enabled
-      executeContentScript(tabId);
-      console.log('execute content script');
-  }
+    // check if the tab is fully loaded and the extension is enabled
+    if (changeInfo.status === 'complete' && tab.active) {
+        // Execute content script when the tab is updated and the extension is enabled
+        executeContentScript(tabId);
+        console.log('execute content script');
+    }
 });
 
 // Function to execute content script in the active tab
