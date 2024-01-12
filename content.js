@@ -73,7 +73,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 function handleSentimentAnalysisResults(results) {
   results.forEach(commentData => {
     const commentElement = findCommentElementByContent(commentData.comment);
-    if (commentElement && commentData.is_negative) {
+    if (commentElement && commentData.is_negative && window.location.hostname.includes('reddit.com')) {
       chrome.storage.local.get(["extensionState"]).then((is_on) => {
         if (is_on.extensionState) {
           chrome.storage.local.get(["blurred"]).then((is_blur) => {

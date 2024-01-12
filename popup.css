@@ -1,20 +1,22 @@
 :root {
-    --green3: #466672;
-    --green2: #95B198;
-    --green1: #EFF6E0;
+    --red3: #FF4500;
+    --red2: #fcbca4;
+    --red1: #EFF6E0;
 }
 
-html {
+#popup {
     width: 300px;
-    height: 370px;
+    height: 380px;
+    outline: 2px solid var(--red3);
+    outline-offset: -10px;
 }
 
 body {
     font-family: "Poppins", sans-serif;
-    background: radial-gradient(circle at top left, var(--green3), var(--green2)),
-        radial-gradient(circle at top right, var(--green2), var(--green1)),
-        radial-gradient(circle at bottom left, var(--green1), var(--green3)),
-        radial-gradient(circle at bottom right, var(--green3), var(--green1));
+    background: radial-gradient(circle at top left, var(--red3), var(--red2)),
+        radial-gradient(circle at top right, var(--red2), var(--red1)),
+        radial-gradient(circle at bottom left, var(--red1), var(--red3)),
+        radial-gradient(circle at bottom right, var(--red3), var(--red1));
     color: white;
     display: flex;
     flex-direction: column;
@@ -34,7 +36,7 @@ h2 {
     font-size: 25px;
     font-weight: 400;
     font-style: italic;
-    color: var(--green2);
+    color: var(--red2);
 }
 
 .switch {
@@ -58,10 +60,10 @@ h2 {
     right: 0;
     bottom: 0;
     margin: auto;
-    background-color: var(--green3);
+    background-color: var(--red3);
     -webkit-transition: .4s;
     transition: .4s;
-    border: 2px solid var(--green2);
+    border: 2px solid var(--red2);
 }
 
 .slider:before {
@@ -77,7 +79,7 @@ h2 {
 }
 
 input:checked+.slider {
-    background-color: var(--green2);
+    background-color: var(--red2);
 }
 
 input:checked+.slider:before {
@@ -99,7 +101,7 @@ h3 {
     color: white;
 }
 
-.on-off {
+#on-off {
     margin: auto;
     display: flex;
     justify-content: space-between;
@@ -107,7 +109,7 @@ h3 {
 }
 
 
-.buttons-container {
+#buttons-container {
     display: flex;
     margin-bottom: 20px;
     margin-top: 20px;
@@ -121,7 +123,7 @@ button {
     padding: 10px;
     width: 110px;
     height: 40px;
-    border: 2px solid var(--green2);
+    border: 2px solid var(--red2);
     background-color: transparent;
     transition: background-color 0.8s, color 0.8s;
     cursor: pointer;
@@ -138,22 +140,23 @@ button {
 }
 
 .active {
-    background-color: var(--green3);
+    background-color: var(--red3);
     color: white;
 }
 
 p {
     width: 70%;
+    text-align: center;
 }
 
 .help-icon-container {
     position: fixed;
-    bottom: 10px;
-    right: 10px;
+    bottom: 15px;
+    right: 15px;
     cursor: pointer;
     height: 20px;
     width: 20px;
-    background-color: var(--green3);
+    background-color: var(--red3);
     border-radius: 50%;
 }
 
@@ -165,20 +168,23 @@ p {
 .help-text {
     display: none;
     position: absolute;
-    background-color: rgba(70, 102, 114, 0.8);
-    color: white;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: var(--red3);
     padding: 10px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     bottom: 30px;
-    width: 200px;
+    width: 250px;
     right: 0;
     text-align: center;
-    font-size: 12px;
-    font-style: italic;
-    font-weight: 400;
 }
 
 .help-icon-container:hover .help-text {
     display: block;
+}
+
+h5 {
+    font-weight: 400;
+    font-style: italic;
+    font-size: 12px;
 }
