@@ -6,7 +6,7 @@
 
 html {
     width: 300px;
-    height: 400px;
+    height: 370px;
 }
 
 body {
@@ -86,7 +86,6 @@ input:checked+.slider:before {
     transform: translateX(40px);
 }
 
-/* Rounded sliders */
 .slider.round {
     border-radius: 34px;
 }
@@ -104,12 +103,14 @@ h3 {
     margin: auto;
     display: flex;
     justify-content: space-between;
+    margin-bottom: 20px;
 }
 
 
 .buttons-container {
     display: flex;
     margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 button {
@@ -139,4 +140,45 @@ button {
 .active {
     background-color: var(--green3);
     color: white;
+}
+
+p {
+    width: 70%;
+}
+
+.help-icon-container {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    cursor: pointer;
+    height: 20px;
+    width: 20px;
+    background-color: var(--green3);
+    border-radius: 50%;
+}
+
+.help-icon {
+    font-size: 12px;
+    padding: 7px;
+}
+
+.help-text {
+    display: none;
+    position: absolute;
+    background-color: rgba(70, 102, 114, 0.8);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    bottom: 30px;
+    width: 200px;
+    right: 0;
+    text-align: center;
+    font-size: 12px;
+    font-style: italic;
+    font-weight: 400;
+}
+
+.help-icon-container:hover .help-text {
+    display: block;
 }
