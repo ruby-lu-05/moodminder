@@ -21,7 +21,7 @@ function handleButtonClick() {
 
   // send the updated comments to the background script
   chrome.runtime.sendMessage({ reloadContentScript: true });
-  chrome.runtime.sendMessage({ comments: comments });
+  chrome.runtime.sendMessage({ comments: comments});
 }
 
 document.addEventListener('click', event => {
@@ -58,18 +58,22 @@ function handleSentimentAnalysisResults(results) {
     if (commentElement && commentData.is_negative) {
       chrome.storage.local.get(["extensionState"]).then((is_on) => {
         if (is_on.extensionState) {
-          chrome.storage.local.get(["blur"]).then((is_blur) => {
-            if (is_blur.blur) {
+          chrome.storage.local.get(["blurred"]).then((is_blur) => {
+            if (is_blur.blurred) {
+              commentElement.style.display = 'inline';
               commentElement.style.filter = 'blur(4px)';
             } else {
+              commentElement.style.filter = 'blur(0px)';
               commentElement.style.display = 'none';
             }});
         } else {
-          chrome.storage.local.get(["blur"]).then((is_blur) => {
-            if (is_blur.blur) {
+          chrome.storage.local.get(["blurred"]).then((is_blur) => {
+            if (is_blur.blurred) {
+              commentElement.style.display = 'inline';
               commentElement.style.filter = 'blur(0px)';
             } else {
               commentElement.style.display = 'inline';
+              commentElement.style.filter = 'blur(0px)';
             }});
         }
       });
