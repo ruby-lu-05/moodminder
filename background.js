@@ -33,7 +33,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     }
 
     if (message.comments) {
-        const url = 'http://3.143.245.177/analyze_sentiment';
+        const url = 'http://3.12.71.194/analyze_sentiment';
         // Send comments to Flask server
         fetch(url, {
             method: 'POST',
