@@ -39,11 +39,10 @@ function handleButtonClick() {
 
   // send the updated comments to the background script
   chrome.runtime.sendMessage({ reloadContentScript: true });
-  chrome.runtime.sendMessage({ comments: comments});
+  chrome.runtime.sendMessage({ comments: comments });
 }
 
 document.addEventListener('click', event => {
-  // console.log('clicked')
   handleButtonClick();
 });
 
@@ -53,7 +52,6 @@ function extractComments() {
   const commentElements = document.querySelectorAll('p');
 
   commentElements.forEach(commentElement => {
-    // console.log(commentElement.textContent)
     comments.push(commentElement.textContent);
   });
 
@@ -83,7 +81,8 @@ function handleSentimentAnalysisResults(results) {
             } else {
               commentElement.style.filter = 'blur(0px)';
               commentElement.style.display = 'none';
-            }});
+            }
+          });
         } else {
           chrome.storage.local.get(["blurred"]).then((is_blur) => {
             if (is_blur.blurred) {
@@ -92,7 +91,8 @@ function handleSentimentAnalysisResults(results) {
             } else {
               commentElement.style.display = 'inline';
               commentElement.style.filter = 'blur(0px)';
-            }});
+            }
+          });
         }
       });
     }
@@ -101,7 +101,6 @@ function handleSentimentAnalysisResults(results) {
 
 function findCommentElementByContent(commentContent) {
   const commentElements = document.querySelectorAll('p');
-  // console.log('matched comment elements:', commentElements);
   for (let i = 0; i < commentElements.length; i++) {
     const currentCommentText = commentElements[i].textContent;
     if (currentCommentText.includes(commentContent)) {

@@ -1,5 +1,3 @@
-console.log('background script loaded');
-
 let extensionState = false;
 let blurred = true;
 

@@ -33,7 +33,6 @@ document.addEventListener('DOMContentLoaded', function () {
     extensionState = data.extensionState || false;
     blurred = data.blurred || true;
 
-    // Update toggle button state
     updateToggleButton(extensionState);
 
     if (blurred) {
