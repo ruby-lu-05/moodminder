@@ -8,9 +8,6 @@
     "storage",
     "scripting"
   ],
-  "host_permissions": [
-    "https://www.reddit.com/*"
-  ],
   "background": {
     "service_worker": "background.js"
   },
